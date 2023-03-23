@@ -4,16 +4,25 @@ apt-get like program that can install and deploy docker based applications on a 
 # Setup
 Go to the Github releases and download the latest version of apt-docker.
 
-    curl https://github.com/ZachisGit/apt-docker/releases/download/latest/apt-docker -o apt-docker
+    curl -L https://github.com/ZachisGit/apt-docker/releases/download/latest/apt-docker > apt-docker
     chmod +x apt-docker
     
-# Example 
+    # optionally add to /bin
+    mv apt-docker /bin
+    
+## MySql Example
+
+```console
+./apt-docker install mysql myname
+```
+
+## mini-docs
 
 ```console
 # apt-docker install [package name] [name]
-apt-docker install mysql server-0
+./apt-docker install mysql server-0
 
 # apt-docker list [search-param]
-apt-docker list
-apt-docker list my
+./apt-docker list
+./apt-docker list my
 ```
