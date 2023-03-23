@@ -135,3 +135,61 @@ class MainClass {
     }
 }
 ```
+
+### C++ (using mysql-connector-c++ library):
+```cpp
+#include <iostream>
+#include <mysqlx/xdevapi.h>
+
+int main() {
+    try {
+        mysqlx::Session session("localhost", 33060, "your_username", "your_password", "your_database");
+        mysqlx::Schema schema = session.getSchema("your_database");
+        mysqlx::Table table = schema.getTable("your_table");
+
+        mysqlx::RowResult rows = table.select().execute();
+
+        for (const mysqlx::Row &row : rows) {
+            std::cout << row[0] << std::endl;
+        }
+
+        session.close();
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return 0;
+}
+```
+
+### PHP
+```php
+<?php
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "your_database";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM your_table";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Name: " . $row["name"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+```
