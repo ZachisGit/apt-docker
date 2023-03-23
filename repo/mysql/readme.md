@@ -3,7 +3,7 @@ Here is a bash script that runs the MySQL container on restart and lists all con
 
 ## Install
 ```shell
-apt-docker install mysql
+apt-docker install mysql myname
 ```
 
 ## Setup Guide
