@@ -1,0 +1,76 @@
+#!/bin/bash
+
+REPO_BASE_URL="https://github.com/ZachisGit/apt-docker/tree/repos/repo"
+RAW_BASE_URL="https://raw.githubusercontent.com/ZachisGit/apt-docker/repos/repo"
+
+function get_closest_match() {
+    search="$1"
+    list="$2"
+    echo "$(echo "${list}" | grep -i "${search}")"
+}
+
+function list_packages() {
+    search="$1"
+    repos="$(curl -s 'https://github.com/ZachisGit/apt-docker/tree/repos/repo' | grep -o 'href="/ZachisGit/apt-docker/tree/repos/repo/[^"]*' | sed -e 's#href="/ZachisGit/apt-docker/tree/repos/repo/##')"
+    if [ -z "${search}" ]; then
+        echo "Available packages:"
+        echo "${repos}"
+    else
+        closest_match="$(get_closest_match "${search}" "${repos}")"
+        if [ -z "${closest_match}" ]; then
+            echo "No matching packages found for '${search}'."
+        else
+            echo "Matching packages for '${search}':"
+            echo "${closest_match}"
+        fi
+    fi
+}
+
+function install_package() {
+    package_name="$1"
+    name="$2"
+    package_script_url="${RAW_BASE_URL}/${package_name}/${package_name}.sh"
+    package_script_path="${name}.sh"
+    
+    status_code=$(curl -s -o "${package_script_path}" -w "%{http_code}" "${package_script_url}")
+    
+    if [ "${status_code}" -eq 200 ]; then
+        chmod +x "${package_script_path}"
+        ./"${package_script_path}" --apt-docker-name="${name}"
+    else
+        echo "Package '${package_name}' not found."
+        list_packages "${package_name}"
+        rm -f "${package_script_path}"
+    fi
+}
+
+function show_usage() {
+    echo "Usage: apt-docker COMMAND [ARGS]"
+    echo ""
+    echo "Commands:"
+    echo "  install  PACKAGE_NAME NAME     Install a package with the given name. ( apt-docker install [package_name] [name] )"
+    echo "  list     SEARCH_PARAM          List available packages, or search for a specific package."
+}
+
+if [ $# -eq 0 ]; then
+    show_usage
+    exit 1
+fi
+
+case "$1" in
+    install)
+        if [ $# -ne 3 ]; then
+            echo "Error: The 'install' command requires 2 arguments. ( apt-docker install [package_name] [name] )"
+            exit 1
+        fi
+        install_package "$2" "$3"
+        ;;
+    list)
+        list_packages "$2"
+        ;;
+    *)
+        echo "Error: Unknown command '$1'"
+        show_usage
+        exit 1
+        ;;
+esac
