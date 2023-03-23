@@ -1,14 +1,10 @@
 #!/bin/bash
 
 # Default values
-APT_DOCKER_NAME="mysql-server"
-MYSQL_TAG="latest"
-MYSQL_ROOT_PASSWORD="my-secret-pw"
-MYSQL_DATABASE="mydatabase"
-MYSQL_USER="username"
-MYSQL_PASSWORD="example-password"
+APT_DOCKER_NAME="httpd-server"
+HTTPD_TAG="2.4"
 DATA_DIR="$HOME/.apt-docker/"
-PORT="3306"
+PORT="8080"
 IP_MODE="local"
 
 # Set confirm_settings to false by default
@@ -25,24 +21,8 @@ while [ "$#" -gt 0 ]; do
       APT_DOCKER_NAME="${1#*=}"
       shift 1
       ;;
-    --mysql-tag=*)
-      MYSQL_TAG="${1#*=}"
-      shift 1
-      ;;
-    --mysql-root-password=*)
-      MYSQL_ROOT_PASSWORD="${1#*=}"
-      shift 1
-      ;;
-    --mysql-database=*)
-      MYSQL_DATABASE="${1#*=}"
-      shift 1
-      ;;
-    --mysql-user=*)
-      MYSQL_USER="${1#*=}"
-      shift 1
-      ;;
-    --mysql-password=*)
-      MYSQL_PASSWORD="${1#*=}"
+    --httpd-tag=*)
+      HTTPD_TAG="${1#*=}"
       shift 1
       ;;
     --data-dir=*)
@@ -64,20 +44,14 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-
-
 # Ask for confirmation or edit settings
 while [ "$confirm_settings" != "true" ]; do
-  SETTINGS=$(dialog --keep-tite --stdout --backtitle "MySQL Container Settings" --form "Please review and edit the settings:" 22 60 0 \
+  SETTINGS=$(dialog --keep-tite --stdout --backtitle "HTTPD Container Settings" --form "Please review and edit the settings:" 22 60 0 \
     "apt-docker-name:" 1 1 "$APT_DOCKER_NAME" 1 20 30 0 \
-    "mysql-tag:" 2 1 "$MYSQL_TAG" 2 20 30 0 \
-    "mysql-root-password:" 3 1 "$MYSQL_ROOT_PASSWORD" 3 20 30 0 \
-    "mysql-database:" 4 1 "$MYSQL_DATABASE" 4 20 30 0 \
-    "mysql-user:" 5 1 "$MYSQL_USER" 5 20 30 0 \
-    "mysql-password:" 6 1 "$MYSQL_PASSWORD" 6 20 30 0 \
-    "data-dir:" 7 1 "$DATA_DIR" 7 20 30 0 \
-    "port:" 8 1 "$PORT" 8 20 30 0 \
-    "ip-mode:" 9 1 "$IP_MODE" 9 20 30 0)
+    "httpd-tag:" 2 1 "$HTTPD_TAG" 2 20 30 0 \
+    "data-dir:" 3 1 "$DATA_DIR" 3 20 30 0 \
+    "port:" 4 1 "$PORT" 4 20 30 0 \
+    "ip-mode:" 5 1 "$IP_MODE" 5 20 30 0)
 
   if [ $? -eq 1 ]; then
     echo "Aborting."
@@ -89,22 +63,14 @@ while [ "$confirm_settings" != "true" ]; do
   unset IFS
 
   APT_DOCKER_NAME="${SETTINGS[0]}"
-  MYSQL_TAG="${SETTINGS[1]}"
-  MYSQL_ROOT_PASSWORD="${SETTINGS[2]}"
-  MYSQL_DATABASE="${SETTINGS[3]}"
-  MYSQL_USER="${SETTINGS[4]}"
-  MYSQL_PASSWORD="${SETTINGS[5]}"
-  DATA_DIR="${SETTINGS[6]}/${APT_DOCKER_NAME}"
-  PORT="${SETTINGS[7]}"
-  IP_MODE="${SETTINGS[8]}"
+  HTTPD_TAG="${SETTINGS[1]}"
+  DATA_DIR="${SETTINGS[2]}/${APT_DOCKER_NAME}"
+  PORT="${SETTINGS[3]}"
+  IP_MODE="${SETTINGS[4]}"
 
-  dialog --keep-tite --backtitle "Confirm MySQL Container Settings" --yesno \
+  dialog --keep-tite --backtitle "Confirm HTTPD Container Settings" --yesno \
   "apt-docker-name: $APT_DOCKER_NAME\n
-mysql-tag: $MYSQL_TAG\n
-mysql-root-password: $MYSQL_ROOT_PASSWORD\n
-mysql-database: $MYSQL_DATABASE\n
-mysql-user: $MYSQL_USER\n
-mysql-password: $MYSQL_PASSWORD\n
+httpd-tag: $HTTPD_TAG\n
 data-dir: $DATA_DIR\n
 port: $PORT\n
 ip-mode: $IP_MODE\n
@@ -134,14 +100,9 @@ done
 
 # Run the Docker container with the provided settings
 docker run --name "$APT_DOCKER_NAME" \
-  -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
-  -e MYSQL_DATABASE="$MYSQL_DATABASE" \
-  -e MYSQL_USER="$MYSQL_USER" \
-  -e MYSQL_PASSWORD="$MYSQL_PASSWORD" \
-  -p "$PORT":3306 \
-  -v "$DATA_DIR":/var/lib/mysql \
-  -d mysql:"$MYSQL_TAG"
-
+  -p "$PORT":80 \
+  -v "$DATA_DIR":/usr/local/apache2/htdocs/ \
+  -d httpd:"$HTTPD_TAG"
 
 # Define text colors
 GREEN="\033[0;32m"
@@ -159,9 +120,9 @@ echo
 echo -e "${YELLOW}Connection URLs:${NC}"
 
 # Display the connection URL for local and public IP addresses
-echo -e "${BLUE}Local connection URL:${NC} mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${LOCAL_IP}:${PORT}/${MYSQL_DATABASE}"
+echo -e "${BLUE}Local connection URL:${NC} http://localhost:${PORT}"
 if [ "$IP_MODE" = "public" ]; then
-  echo -e "${BLUE}Public connection URL:${NC} mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${PUBLIC_IP}:${PORT}/${MYSQL_DATABASE}"
+  echo -e "${BLUE}Public connection URL:${NC} http://${PUBLIC_IP}:${PORT}"
 fi
 
 echo

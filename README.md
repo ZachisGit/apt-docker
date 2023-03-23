@@ -1,13 +1,24 @@
 # apt-docker
 apt-get like program that can install and deploy docker based applications on a single or multiple nodes. It is something between apt-get, kubernetes and a container repository.
 
-# Setup
+## Setup
 Go to the Github releases and download the latest version of apt-docker.
 
-    curl https://github.com/ZachisGit/apt-docker/releases/download/latest/apt-docker -o apt-docker
+    curl -L https://github.com/ZachisGit/apt-docker/releases/download/latest/apt-docker > apt-docker
     chmod +x apt-docker
     
-# Example 
+    # optionally add to /bin
+    mv apt-docker /bin
+    
+If you dont perform the additional mv to /bin action, replace **apt-docker** with **./apt-docker**
+    
+## MySql Example
+
+```console
+apt-docker install mysql myname
+```
+
+## mini-docs
 
 ```console
 # apt-docker install [package name] [name]
