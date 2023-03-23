@@ -1,9 +1,9 @@
-# MySql - Single Node
+# MySql
 Here is a bash script that runs the MySQL container on restart and lists all configurable things. This script is suitable for a single-node setup. If you need a cluster setup, consider using docker-compose or a container orchestration tool like Kubernetes.
 
 ## Install
 ```shell
-apt-docker install mysql --mode=single
+apt-docker install mysql
 ```
 
 ## Setup Guide
