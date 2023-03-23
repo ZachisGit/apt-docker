@@ -1,4 +1,4 @@
-# Apt-Docker: Effective Container Deployment & Management
+# Apt-Docker
 
 Apt-Docker is a tool designed for developers and sysadmins to deploy and manage Docker-based applications on single or multiple nodes with ease. It combines the simplicity of apt-get with the functionality of a container repository.
 ## Features
