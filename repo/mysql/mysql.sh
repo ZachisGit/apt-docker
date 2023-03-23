@@ -5,7 +5,7 @@ APT_DOCKER_NAME="mysql-server"
 MYSQL_TAG="latest"
 MYSQL_ROOT_PASSWORD="my-secret-pw"
 MYSQL_DATABASE="mydatabase"
-MYSQL_USER="user-name"
+MYSQL_USER="username"
 MYSQL_PASSWORD="example-password"
 DATA_DIR="$HOME/.apt-docker/mysql-single-$APT_DOCKER_NAME"
 PORT="3306"
@@ -142,9 +142,6 @@ docker run --name "$APT_DOCKER_NAME" \
   -v "$DATA_DIR":/var/lib/mysql \
   -d mysql:"$MYSQL_TAG"
 
-# Clear the screen and reset terminal colors
-clear
-tput sgr0
 
 # Define text colors
 GREEN="\033[0;32m"
