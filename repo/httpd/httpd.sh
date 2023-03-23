@@ -127,4 +127,4 @@ fi
 
 echo
 echo -e "${YELLOW}For usage instructions, please visit the following GitHub link:${NC}"
-echo -e "${BLUE}https://github.com/user/repo/blob/main/README.md${NC}"
+echo -e "${BLUE}https://github.com/ZachisGit/apt-docker/blob/repos/repo/${APT_DOCKER_NAME}/readme.md${NC}"
