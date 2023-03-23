@@ -13,22 +13,20 @@ curl -L https://github.com/ZachisGit/apt-docker/releases/download/latest/apt-doc
 ```
 
 
-1. Make it executable:
+2. Make it executable:
 
 ```bash
 chmod +x apt-docker
 ```
 
  
-1. Optionally, move to `/bin`:
+3. Optionally, move to `/bin`:
 
 ```bash
 mv apt-docker /bin
 ```
 
 
-
-*.*
 ## Usage
 
 Deploy a MySQL container:
