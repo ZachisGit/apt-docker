@@ -7,7 +7,7 @@ MYSQL_ROOT_PASSWORD="my-secret-pw"
 MYSQL_DATABASE="mydatabase"
 MYSQL_USER="username"
 MYSQL_PASSWORD="example-password"
-DATA_DIR="$HOME/.apt-docker/mysql-single-$APT_DOCKER_NAME"
+DATA_DIR="$HOME/.apt-docker/"
 PORT="3306"
 IP_MODE="local"
 
@@ -94,7 +94,7 @@ while [ "$confirm_settings" != "true" ]; do
   MYSQL_DATABASE="${SETTINGS[3]}"
   MYSQL_USER="${SETTINGS[4]}"
   MYSQL_PASSWORD="${SETTINGS[5]}"
-  DATA_DIR="${SETTINGS[6]}"
+  DATA_DIR="${SETTINGS[6]}/${APT_DOCKER_NAME}"
   PORT="${SETTINGS[7]}"
   IP_MODE="${SETTINGS[8]}"
 
@@ -166,4 +166,4 @@ fi
 
 echo
 echo -e "${YELLOW}For usage instructions, please visit the following GitHub link:${NC}"
-echo -e "${BLUE}https://github.com/ZachisGit/apt-docker/blob/repos/repo/mysql/readme.md${NC}"
+echo -e "${BLUE}https://github.com/ZachisGit/apt-docker/blob/repos/repo/${APT_DOCKER_NAME}/readme.md${NC}"
