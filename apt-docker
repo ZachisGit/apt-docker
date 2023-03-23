@@ -1,5 +1,47 @@
 #!/bin/bash
 
+if command -v dialog >/dev/null 2>&1; then
+    echo -n ""
+else
+    echo "Dialog is not installed. Installing..."
+    if [ "$(uname)" == "Darwin" ]; then
+        if command -v brew >/dev/null 2>&1; then
+            brew install dialog
+        else
+            echo "Error: Homebrew not installed on macOS. Please install Homebrew first."
+            exit 1
+        fi
+    elif [ -f /etc/os-release ]; then
+        . /etc/os-release
+        case $ID in
+            debian|ubuntu|raspbian)
+                sudo apt-get update
+                sudo apt-get install -y dialog
+                ;;
+            fedora)
+                sudo dnf install -y dialog
+                ;;
+            centos|rhel)
+                sudo yum install -y dialog
+                ;;
+            opensuse*)
+                sudo zypper install -y dialog
+                ;;
+            arch|manjaro)
+                sudo pacman -S --noconfirm dialog
+                ;;
+            *)
+                echo "Unsupported distribution. Please install 'dialog' manually."
+                exit 1
+                ;;
+        esac
+    else
+        echo "Unsupported OS. Please install 'dialog' manually."
+        exit 1
+    fi
+fi
+
+
 REPO_BASE_URL="https://github.com/ZachisGit/apt-docker/tree/repos/repo"
 RAW_BASE_URL="https://raw.githubusercontent.com/ZachisGit/apt-docker/repos/repo"
 
