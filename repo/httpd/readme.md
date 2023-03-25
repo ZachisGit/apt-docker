@@ -3,7 +3,14 @@ The Apache HTTP Server (httpd) is a widely used, open-source web server software
 
 ## Install
 
-    apt-docker install httpd myhttpd
+    apt-docker install httpd myname
+
+    # Parameters
+    --apt-docker-name="httpd-server"
+    --httpd-tag="2.4"
+    --data-dir="$HOME/.apt-docker/"
+    --port="8080"
+    --ip-mode="local"
 
 ## Setup Guide
 In this guide, you'll set up an Apache httpd Docker container without using a Dockerfile. You'll choose a specific port and use your project directory for your HTML content.

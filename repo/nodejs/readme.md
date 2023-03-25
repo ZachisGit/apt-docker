@@ -1,5 +1,18 @@
 # NodeJS
 
+## Install
+
+    apt-docker install nodejs myname
+  
+  # Parameters
+  --apt-docker-name="nodejs-server"
+  --node-tag="latest"
+  --data-dir="$HOME/.apt-docker/"
+  --port="3000"
+  --ip-mode="local"
+
+
+## Setup
 Setting up the Node.js Docker image is quite straightforward. Follow these step-by-step instructions to get started: 
 1. Install Docker:
 

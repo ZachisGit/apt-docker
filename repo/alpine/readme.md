@@ -1,8 +1,21 @@
-# Alpine Linux Docker Image Setup
+# Alpine 
 
 Alpine Linux is a lightweight Linux distribution built around musl libc and BusyBox. The image is only 5 MB in size and has access to a package repository that is much more complete than other BusyBox based images. This makes Alpine Linux a great base image for utilities and even production applications.
 
-![Alpine Logo](https://alpinelinux.org/alpine-logo.png)
+
+## Install
+
+    apt-docker install alpine myname
+
+    # Parameters
+    --alpine-docker-name="alpine-container"
+    --alpine-tag="3.14"
+    --data-dir="$HOME/.alpine-docker/"
+    --port="8080"
+    --ip-mode="local"
+    
+
+
 
 ## How to Use the Alpine Linux Docker Image
 

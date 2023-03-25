@@ -2,10 +2,22 @@
 
 Setting Up a Simple Docker-based MongoDB Server 
 
+
 ## Install
-```shell
-apt-docker install mongo myname
-```
+
+    apt-docker install mongo myname
+
+    # Parameters
+    --apt-docker-name="mongo-server"
+    --mongo-tag="latest"
+    --mongo-initdb-root-username="root"
+    --mongo-initdb-root-password="my-secret-pw"
+    --mongo-database="mydatabase"
+    --mongo-user="username"
+    --mongo-password="example-password"
+    --data-dir="$HOME/.apt-docker/"
+    --port="27017"
+    --ip-mode="local"
 
 ## Setup Guide
 1. Install Docker on your system if you haven't already. You can follow the installation guide for your specific operating system from the Docker website. 
