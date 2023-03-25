@@ -2,9 +2,19 @@
 Here is a bash script that runs the MySQL container on restart and lists all configurable things. This script is suitable for a single-node setup. If you need a cluster setup, consider using docker-compose or a container orchestration tool like Kubernetes.
 
 ## Install
-```shell
-apt-docker install mysql myname
-```
+
+    apt-docker install mysql myname
+
+    # Parameters
+    --apt-docker-name="mysql-server"
+    --mysql-tag="latest"
+    --mysql-root-password="my-secret-pw"
+    --mysql-database="mydatabase"
+    --mysql-user="username"
+    --mysql-password="example-password"
+    --data-dir="$HOME/.apt-docker/"
+    --port="3306"
+    --ip-mode="local"
 
 ## Setup Guide
 ```shell
