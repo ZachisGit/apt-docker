@@ -1,6 +1,17 @@
 # Apt-Docker
 
-Apt-Docker is a tool designed for developers and sysadmins to deploy and manage Docker-based applications on single or multiple nodes with ease. It combines the simplicity of apt-get with the functionality of a container repository.
+Apt-Docker is a tool designed for developers and sysadmins to deploy and manage Docker-based applications on a single or multiple nodes with ease. By integrating an Express Configuration UI and offering standardized documentation, Apt-Docker streamlines container management while providing detailed parameter, volume mount, and environment variable information for the Docker images.
+
+Key Features:
+-------------
+
+*   **Express Configuration UI**: Apt-Docker provides an intuitive user interface, enabling users to easily set up and configure their containers without hassle.
+    
+*   **Standardized Documentation**: The repository features comprehensive, standardized documentation with step-by-step setup instructions in the form of readme pages, akin to a wiki.
+    
+*   **Parameter, Volume Mount, and Environment Variable Information**: Readme pages also include detailed information on the Docker image's parameters, volume mounts, and environment variables, providing users with a complete understanding of the container's configuration.
+    
+
 ## Features
 - Efficient installation and deployment of Docker containers
 - Unified container management across nodes
